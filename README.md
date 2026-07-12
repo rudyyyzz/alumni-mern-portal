@@ -1,5 +1,5 @@
 # MERN Alumni Portal - WhatsApp-like Chat Features
-Live URL: https://alumni-portal-frontend-vdvb.onrender.com
+Live URL: https://alumni-mern-portal-1.onrender.com
 
 A comprehensive alumni portal with real-time chat functionality featuring WhatsApp-like features.
 
