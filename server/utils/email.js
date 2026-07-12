@@ -1,12 +1,5 @@
 const nodemailer = require("nodemailer");
 
-console.log({
-  HOST: process.env.SMTP_HOST,
-  PORT: process.env.SMTP_PORT,
-  USER: process.env.SMTP_USER,
-  PASS: !!process.env.SMTP_PASS,
-});
-
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
@@ -14,15 +7,20 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
-    },
+  },
 });
 
-(async () => {
-  try {
-    await transporter.verify();
-    console.log("SMTP VERIFIED");
-  } catch (e) {
-    console.error("VERIFY FAILED");
-    console.error(e);
-  }
-})();
+transporter.verify()
+  .then(() => console.log("SMTP VERIFIED"))
+  .catch(err => console.error("VERIFY FAILED", err));
+
+const sendEmail = async (options) => {
+  return transporter.sendMail({
+    from: `Alumni Portal <${process.env.EMAIL_FROM}>`,
+    to: options.email,
+    subject: options.subject,
+    html: options.html,
+  });
+};
+
+module.exports = sendEmail;
